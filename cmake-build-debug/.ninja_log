@@ -1,0 +1,11 @@
+# ninja log v5
+2	44	6918969183585501	CMakeFiles/C_Stuff.dir/process.c.obj	2f0f606e0c9c4855
+0	45	6918969183585501	CMakeFiles/C_Stuff.dir/lotto_gen.c.obj	9cfbdb5649276497
+0	42	6918970636341237	CMakeFiles/process.dir/process.c.obj	cef71aad0109d333
+42	86	6918970636771205	process.exe	5bec060284d2ad87
+0	44	6918970710429932	CMakeFiles/lotto_gen.dir/lotto_gen.c.obj	81afedb0ad31bbd7
+44	89	6918970710869923	lotto_gen.exe	ac0a7fc780534158
+0	41	6918971268610494	CMakeFiles/process.dir/process.c.obj	cef71aad0109d333
+41	87	6918971269050502	process.exe	5bec060284d2ad87
+1	41	6918971478599770	CMakeFiles/process.dir/process.c.obj	cef71aad0109d333
+41	85	6918971479029764	process.exe	5bec060284d2ad87

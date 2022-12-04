@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "C_Stuff",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "C_Stuff::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-C_Stuff-Debug-5fca3335f30ebccd35bc.json",
+					"name" : "C_Stuff",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "lotto_gen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-lotto_gen-Debug-1171321e4e6f45f3278a.json",
+					"name" : "lotto_gen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "process::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-process-Debug-02db7dc62f834108921d.json",
+					"name" : "process",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/C_Stuff/cmake-build-debug",
+		"source" : "D:/C_Stuff"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

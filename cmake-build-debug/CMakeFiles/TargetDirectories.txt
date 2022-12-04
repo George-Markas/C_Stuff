@@ -1,0 +1,5 @@
+D:/C_Stuff/cmake-build-debug/CMakeFiles/C_Stuff.dir
+D:/C_Stuff/cmake-build-debug/CMakeFiles/process.dir
+D:/C_Stuff/cmake-build-debug/CMakeFiles/lotto_gen.dir
+D:/C_Stuff/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/C_Stuff/cmake-build-debug/CMakeFiles/rebuild_cache.dir
