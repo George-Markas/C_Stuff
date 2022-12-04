@@ -30,7 +30,7 @@ int main(void){
 
     // Checking if votes.dat is empty and exiting the programme if it is. Sets the file position to the end of the file. If said position is 0 it naturally means the file is empty.
 
-    fseek(filePointer,0 ,SEEK_END);
+    fseek(filePointer,0,SEEK_END);
     fileEmpty = ftell(filePointer);
     if(fileEmpty == 0){
         fclose(filePointer);
