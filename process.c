@@ -1,12 +1,12 @@
 
 //  Info stored as 16 bit unsigned short integers.
 
-//  The 7 most important bits store the voter's age (possible values are 0 - 127 but only 18 through 99 are valid).
+//  The 7 most significant bits store the voter's age (possible values are 0 - 127 but only 18 through 99 are valid).
 
 //  The next 2 bits store the voter's gender with these values being possible & valid: 1 (Male), 2 (Female), 3 (N/A).
 
-//  The 7 least important bits store the vote itself, with each unique bit representing whether a candidate (out of the 7) has been voted for or not (with 1 and 0 values respectively).
-//  The least important bit represents candidate #6, the second least important bit candidate #5 etc.
+//  The 7 least significant bits store the vote itself, with each unique bit representing whether a candidate (out of the 7) has been voted for or not (with 1 and 0 values respectively).
+//  The least significant bit represents candidate #6, the second least important bit candidate #5 etc.
 
 #include <stdlib.h>
 #include <stdio.h>
