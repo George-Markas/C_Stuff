@@ -38,7 +38,6 @@ int main(void){
     }
 
     // Loops till the End-of-File indicator associated with the stream is set. Checks for newlines and adds them up to the voter count since each line change indicates a new info entry.
-    // The amount of voter entries is the number of newlines + 1 since there's no newline for the last entry of the votes.dat file.
 
     rewind(filePointer);
 
