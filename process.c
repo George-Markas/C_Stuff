@@ -15,7 +15,6 @@
 int main(void){
 
     FILE * filePointer;
-    int voterCount = 1;
     unsigned short fileEmpty = 1;
 
     filePointer = fopen("votes.dat", "r"); // Opening votes.dat file to read its contents
@@ -25,7 +24,7 @@ int main(void){
     if(filePointer == NULL){
         fclose(filePointer);
         printf("Error: votes.dat can not be read!\n");
-        exit(-1);
+        exit(EXIT_FAILURE);
     }
 
     // Checking if votes.dat is empty and exiting the programme if it is. Sets the file position to the end of the file. If said position is 0 it naturally means the file is empty.
@@ -35,25 +34,30 @@ int main(void){
     if(fileEmpty == 0){
         fclose(filePointer);
         printf("Error: votes.dat is empty, exiting programme...\n");
-        exit(-1);
+        exit(EXIT_FAILURE);
     }
 
     // Loops till the End-of-File indicator associated with the stream is set. Checks for newlines and adds them up to the voter count since each line change indicates a new info entry.
     // The amount of voter entries is the number of newlines + 1 since there's no newline for the last entry of the votes.dat file.
 
-    while(feof(filePointer) == 0){
-        if(fgetc(filePointer) == '\n'){
-            voterCount++;
+    rewind(filePointer);
+
+    int lineCount = 0;
+    int charTube;
+
+    for(charTube = getc(filePointer); charTube != EOF; charTube = getc(filePointer)){
+        if (charTube == '\n'){
+            lineCount++;
         }
     }
 
     fclose(filePointer);
 
-    printf("Lines counted: %d\n",voterCount); // for debug purposes, to be deleted later.
+    printf("Lines counted: %d\n",lineCount); // for debug purposes, to be deleted later.
 
-    int* voterData = (int*) malloc(voterCount * sizeof(unsigned short)); // Allocating space for the array containing the voter info (number of voters * size needed for an unsigned short int).
+    int* voterData = (int*) malloc(lineCount * sizeof(unsigned short)); // Allocating space for the array containing the voter info (number of voters * size needed for an unsigned short int).
 
-    printArray(voterData, voterCount); // for debug purposes, to be deleted later.
+    printArray(voterData, lineCount); // for debug purposes, to be deleted later.
 
     free(voterData);
     return (0);
