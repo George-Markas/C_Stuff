@@ -21,11 +21,12 @@ int main(void){
     printArray(array,4);
 
     int coefficient = 1;
+    int sum = 0;
 
-    for(int i = 3; i > 0; i--){
-        array[i] = array[i] * coefficient;
+    for(int i = 3; i > -1; i--){
+        sum += array[i] * coefficient;
         coefficient <<= 4;
     }
 
-    printArray(array,4);
+    printf("%d\n", sum);
 }
