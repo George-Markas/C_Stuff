@@ -8,9 +8,9 @@ void hexToBinary(char *hexString) {
 
     for (int i = 0; i < length; i++) {
 
-        int hexInteger =  strtol(hexString, NULL, 16);
+        int hexInteger = strtol(hexString, NULL, 16);
 
-        for (int j = 3; j > 0; j--) {
+        for (int j = 3; j >= 0; j--) {
             printf("%d", (hexInteger >> j) & 1);
         }
     }
