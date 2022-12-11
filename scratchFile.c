@@ -10,7 +10,7 @@ void hexToBinary(char *hexString) {
 
         int hexInteger =  strtol(hexString, NULL, 16);
 
-        for (int j = 3; j > -1; j--) {
+        for (int j = 3; j > 0; j--) {
             printf("%d", (hexInteger >> j) & 1);
         }
     }
@@ -18,9 +18,10 @@ void hexToBinary(char *hexString) {
 
 int main(void) {
 
-    char hexString[16];
+    char hexString[16] = {0};
 
     printf("Enter a hexadecimal number: \n");
+
     scanf("%s", hexString);
 
     hexToBinary(hexString);
