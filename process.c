@@ -21,7 +21,7 @@ int main(void){
 
     // Checking if votes.dat exists, exiting the programme if the file is non-existent.
 
-    if(filePointer == NULL){
+    if (filePointer == NULL) {
         fclose(filePointer);
         printf("Error: votes.dat can not be read!\n");
         exit(EXIT_FAILURE);
@@ -31,7 +31,7 @@ int main(void){
 
     fseek(filePointer,0,SEEK_END);
     fileEmpty = ftell(filePointer);
-    if(fileEmpty == 0){
+    if (fileEmpty == 0) {
         fclose(filePointer);
         printf("Error: votes.dat is empty, exiting programme...\n");
         exit(EXIT_FAILURE);
@@ -44,7 +44,7 @@ int main(void){
     int lineCount = 0;
     int charTube;
 
-    for(charTube = getc(filePointer); charTube != EOF; charTube = getc(filePointer)){
+    for (charTube = getc(filePointer); charTube != EOF; charTube = getc(filePointer)) {
         if (charTube == '\n'){
             lineCount++;
         }
@@ -59,7 +59,7 @@ int main(void){
     printArray(voterData, lineCount); // for debug purposes, to be deleted later.
 
     free(voterData);
-    return (0);
+    return (EXIT_SUCCESS);
 }
 
 

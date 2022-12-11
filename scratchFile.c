@@ -1,32 +1,29 @@
 #include <stdio.h>
-#include "gcsheet.h"
-int main(void){
+#include <stdlib.h>
+#include <string.h>
 
-    int array[4];
-    unsigned short int hexNumber;
+void hexToBinary(char *hexString) {
 
-    printf("Input 4-bit hex number: \n");
-    scanf("%hu", &hexNumber);
+    size_t length = strlen(hexString);
 
-    int rightPusher, leftPusher;
-    rightPusher = 10000;
-    leftPusher = 1000;
+    for (int i = 0; i < length; i++) {
 
-    for(int i = 0; i < 4; i++){
-        array[i] = (hexNumber % rightPusher) / leftPusher;
-        rightPusher /= 10;
-        leftPusher /= 10;
+        int hexInteger =  strtol(hexString, NULL, 16);
+
+        for (int j = 3; j > -1; j--) {
+            printf("%d", (hexInteger >> j) & 1);
+        }
     }
+}
 
-    printArray(array,4);
+int main(void) {
 
-    int coefficient = 1;
-    int sum = 0;
+    char hexString[16];
 
-    for(int i = 3; i > -1; i--){
-        sum += array[i] * coefficient;
-        coefficient <<= 4;
-    }
+    printf("Enter a hexadecimal number: \n");
+    scanf("%s", hexString);
 
-    printf("%d\n", sum);
+    hexToBinary(hexString);
+
+    return (EXIT_SUCCESS);
 }
