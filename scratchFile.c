@@ -1,32 +1,37 @@
 #include <stdio.h>
-//#include <stdlib.h>
 #include <string.h>
 
-void hexToBinary (char *hexString) {
+ void hexToBinary (char *hexString) {
 
-    size_t characterLength= strlen(hexString);
-    //int* bitStorage = (int*) malloc(characterLength * 4);
-    int bitStorage[characterLength * 4];
-    int q = 0;
-    for (int i = 0; i < characterLength; i++) {
+    size_t stringLength= strlen(hexString);
+    int bitStorage[sizeof(int) * stringLength];
+    int quadOffset = 0;
+
+    for (int i = 0; i < stringLength; i++) {
+
         int coefficient = 8;
+
         for (int j = 0; j < 4; j++) {
-            bitStorage[j] = (hexString[i] & coefficient);
+
+            if (hexString[i] & coefficient) {
+                bitStorage[j + quadOffset] = 1;
+            }else{
+                bitStorage[j + quadOffset] = 0;
+            }
             coefficient >>= 1;
         }
-        q += 4;
+        quadOffset += 4;
     }
-    for (int i = 0; i < characterLength * 4; i++) {
-        printf("%d", bitStorage[i]);
-    }
-    //free(bitStorage);
+
 }
 
 int main(void){
+
     char test[4];
     printf("Input test hex: \n");
     scanf("%s", test);
     hexToBinary(test);
+
 }
 
 
