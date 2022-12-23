@@ -12,10 +12,10 @@
 #include <stdio.h>
 #include "gcsheet.h"
 
-int main(void){
+int main (void) {
 
     FILE * filePointer;
-    unsigned short fileEmpty = 1;
+    unsigned short fileEmpty;
 
     filePointer = fopen("votes.dat", "r"); // Opening votes.dat file to read its contents
 
@@ -54,7 +54,7 @@ int main(void){
 
     printf("Lines counted: %d\n",lineCount); // for debug purposes, to be deleted later.
 
-    int* voterData = (int*) malloc(lineCount * sizeof(unsigned short)); // Allocating space for the array containing the voter info (number of voters * size needed for an unsigned short int).
+    int* voterData = (int*) malloc(lineCount * sizeof(unsigned short)); // Allocating space for the array containing the voter info (number of voters * size of an unsigned short int).
 
     printArray(voterData, lineCount); // for debug purposes, to be deleted later.
 

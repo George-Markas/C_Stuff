@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /* Function that takes a hex number as an unsigned short input, converts it to binary bits (1 & 0), stores said bits in memory and returns a pointer with the memory address. */
-// Make sure deallocate the used memory by using free() since this function doesn't do so.
+// Make sure to deallocate the used memory by using free() since this function doesn't do so.
 
 int* hexToBin (const unsigned short *hexInput) {
 
