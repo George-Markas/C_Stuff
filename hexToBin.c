@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Function that takes a hex number as an unsigned short input, converts it to binary bits (1 & 0), stores said bits in memory and returns a pointer with the memory address. */
-// Make sure to deallocate the used memory by using free() since this function doesn't do so.
+/* Function that takes a hex number as an unsigned short input, converts it to binary bits (1 & 0), stores said bits in
+memory and returns a pointer with the memory address. */
+
+// WARNING: make sure to deallocate the used memory by using free() since this function doesn't do so.
 
 int* hexToBin (const unsigned short *hexInput) {
 
@@ -12,7 +14,9 @@ int* hexToBin (const unsigned short *hexInput) {
     unsigned short digitCount = 0;
     digitBuffer = hexNumber;
 
-    while (digitBuffer) { // determining the number of digits of the inputted hex number
+    // determining the number of digits of the inputted hex number
+
+    while (digitBuffer) {
         digitCount++;
         digitBuffer >>= 4;
     }
@@ -21,15 +25,24 @@ int* hexToBin (const unsigned short *hexInput) {
     int *bitStorage = (int*) malloc(sizeof(int) * digitCount);
 
     for (int i = 0; i < digitCount; i++) {
-        digitBuffer = (hexNumber & separatorMask);  // Using bit-masking to zero out all digits besides the desired one
 
-        for (int j = (digitCount -1) - i; j > 0; j--) {   // Bit-shifting ( (number of digits - 1) - digits already processed) times to remove excess zeros, perfectly isolating the desired digit
+        // Using bit-masking to zero out all digits besides the desired one
+
+        digitBuffer = (hexNumber & separatorMask);
+
+        /* Bit-shifting ( (number of digits - 1) - digits already processed) times to remove excess zeros, perfectly
+        isolating the desired digit */
+
+        for (int j = (digitCount -1) - i; j > 0; j--) {
             digitBuffer >>= 4;
         }
 
         unsigned int binaryMask = 0x8;
 
-        for (int k = 0; k < 4; k++) {   // Using another bit-mask to get the value of each individual bit of the isolated digit and printing it in essentially binary form.
+        /* Using another bit-mask to get the value of each individual bit of the isolated digit and printing it in
+        essentially binary form. */
+
+        for (int k = 0; k < 4; k++) {
             if (digitBuffer & binaryMask) {
                 bitStorage[k + quadOffset] = 1;
             }
