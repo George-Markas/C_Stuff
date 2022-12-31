@@ -32,6 +32,7 @@ int main (void) {
 
     fseek (filePointer,0,SEEK_END);
     fileEmpty = ftell(filePointer);
+
     if (fileEmpty == 0) {
         fclose(filePointer);
         printf("Error: votes.dat is empty, exiting programme...\n");
