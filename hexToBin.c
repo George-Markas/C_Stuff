@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Function that takes a hex number as an unsigned short input, converts it to binary bits (1 & 0), stores said bits in
+/* Function that takes a hex number as an unsigned long input, converts it to binary bits (1 & 0), stores said bits in
 memory and returns a pointer with the memory address. */
 
 // WARNING: make sure to deallocate the used memory by using free() since this function doesn't do so.
 
-int* hexToBin (const unsigned short *hexInput) {
+int* hexBin (const unsigned long *hexInput) {
 
-    unsigned short digitBuffer, separatorMask = 0xf000;
-    unsigned short hexNumber = *hexInput;
+    unsigned long digitBuffer;
+    unsigned long hexNumber = *hexInput;
 
     unsigned short digitCount = 0;
     digitBuffer = hexNumber;
@@ -21,8 +21,16 @@ int* hexToBin (const unsigned short *hexInput) {
         digitBuffer >>= 4;
     }
 
+    unsigned long separatorMask = 0xf;
+
+    // Initializing bitmask based on the number of digits of the inputted hexadecimal number.
+
+    for (int i = 0; i < (digitCount - 1); i++) {
+        separatorMask <<= 4;
+    }
+
     unsigned short quadOffset = 0;
-    int *bitStorage = (int*) malloc(sizeof(int) * digitCount);
+    int *bitStorage = (int*) malloc(sizeof (int) * digitCount);
 
     for (int i = 0; i < digitCount; i++) {
 
@@ -30,14 +38,14 @@ int* hexToBin (const unsigned short *hexInput) {
 
         digitBuffer = (hexNumber & separatorMask);
 
-        /* Bit-shifting ( (number of digits - 1) - digits already processed) times to remove excess zeros, perfectly
+        /* Bit-shifting ( (number of digits - 1) - digits already processed ) times to remove excess zeros, fully
         isolating the desired digit */
 
         for (int j = (digitCount -1) - i; j > 0; j--) {
             digitBuffer >>= 4;
         }
 
-        unsigned int binaryMask = 0x8;
+        unsigned short binaryMask = 0x8;
 
         /* Using another bit-mask to get the value of each individual bit of the isolated digit and printing it in
         essentially binary form. */
@@ -58,16 +66,31 @@ int* hexToBin (const unsigned short *hexInput) {
     return (bitStorage);
 }
 
+/* Driver programme to test the function */
+
 int main (void) {
 
-    unsigned short hexNumber;
+    unsigned long hexNumber, digitBuffer;
+    unsigned short digitCount = 0;
     int* bitStorage = NULL;
-    printf("Input hex number: \n");
-    scanf("%hx", &hexNumber);
-    bitStorage = hexToBin(&hexNumber);
 
-    for (int i = 0; i < 16; i++) {
-        printf("%d", bitStorage[i]);
+    printf ("Input hex number: \n");
+    scanf ("%lx", &hexNumber);
+
+    digitBuffer = hexNumber;
+
+    /* determining the number of digits of the inputted hex number again since the function isn't designed to return
+    it. Needed here for demonstration since we need to print each bit of each hex digit which is 4 bits per digit */
+
+    while (digitBuffer) {
+        digitCount++;
+        digitBuffer >>= 4;
+    }
+
+    bitStorage = hexBin (&hexNumber);
+
+    for (int i = 0; i < (digitCount * 4); i++) {
+        printf ("%d", bitStorage[i]);
     }
 
     free(bitStorage);
