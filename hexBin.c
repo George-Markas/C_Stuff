@@ -62,7 +62,6 @@ int* hexBin (const unsigned long *hexInput) {
         separatorMask >>= 4;
         quadOffset += 4;
     }
-
     return (bitStorage);
 }
 
