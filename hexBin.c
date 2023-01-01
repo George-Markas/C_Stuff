@@ -97,6 +97,7 @@ int main (void) {
 }
 
 /* This function is also part of
+ *
        _ _ _
        | (_) |
    __ _| |_| |__
@@ -106,5 +107,6 @@ int main (void) {
    __/ |
   |___/
 
+https://github.com/George-Markas/C_Stuff/tree/main/glib
 
 */
