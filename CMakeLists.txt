@@ -9,5 +9,5 @@ add_executable(C_Stuff
         process.c glib/glib.h)
 
 add_executable(process process.c)
-add_executable(lotto_gen lottoGen.c)
-add_executable(hexToBin hexBin.c)
+add_executable(lottoGen lottoGen.c)
+add_executable(hexBin hexBin.c)

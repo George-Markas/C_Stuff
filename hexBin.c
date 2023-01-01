@@ -6,7 +6,7 @@ memory and returns a pointer with the memory address. */
 
 // WARNING: make sure to deallocate the used memory by using free() since this function doesn't do so.
 
-int* hexBin (const unsigned long *hexInput) {
+unsigned short* hexBin (const unsigned long *hexInput) {
 
     unsigned long digitBuffer;
     unsigned long hexNumber = *hexInput;
@@ -30,7 +30,7 @@ int* hexBin (const unsigned long *hexInput) {
     }
 
     unsigned short quadOffset = 0;
-    int *bitStorage = (int*) malloc(sizeof (int) * digitCount);
+    unsigned short *bitStorage = (unsigned short*) malloc(sizeof (unsigned short ) * digitCount);
 
     for (int i = 0; i < digitCount; i++) {
 
@@ -71,7 +71,7 @@ int main (void) {
 
     unsigned long hexNumber, digitBuffer;
     unsigned short digitCount = 0;
-    int* bitStorage = NULL;
+    unsigned short* bitStorage = NULL;
 
     printf ("Input hex number: \n");
     scanf ("%lx", &hexNumber);
@@ -100,7 +100,7 @@ int main (void) {
 
  This function is also part of
 
-                /$$ /$$ /$$
+           /$$ /$$ /$$
           | $$|__/| $$
   /$$$$$$ | $$ /$$| $$$$$$$
  /$$__  $$| $$| $$| $$__  $$
