@@ -10,4 +10,4 @@ add_executable(C_Stuff
 
 add_executable(process process.c)
 add_executable(lotto_gen lotto_gen.c)
-add_executable(hexToBin hexToBin.c)
+add_executable(hexToBin hexBin.c)
