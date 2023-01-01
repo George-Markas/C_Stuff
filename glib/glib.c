@@ -1,5 +1,24 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* Simple swap() implementation utilizing bitwise XOR */
+
+void xorSwap (int* a, int* b) {
+    if (*a != *b) {
+        *a = *a ^ *b;
+        *b = *a ^ *b;
+        *a = *a ^ *b;
+    }
+}
+
+/* Simple function that prints the elements of an integer array, each seperated by vertical lines */
+
+void printArray(int* array, int arraySize) {
+    for (int i = 0; i < arraySize; i++) {
+        if (!i) {
+            printf ("|");
+        }
+        printf ("%02d|", array[i]);
+    }
+    printf ("\n");
+}
 
 /* Function that takes a hex number as an unsigned long input, converts it to binary bits (1 & 0), stores said bits in
 memory and returns a pointer with the memory address. */
@@ -65,46 +84,4 @@ int* hexBin (const unsigned long *hexInput) {
     return (bitStorage);
 }
 
-/* Driver programme to test the function */
 
-int main (void) {
-
-    unsigned long hexNumber, digitBuffer;
-    unsigned short digitCount = 0;
-    int* bitStorage = NULL;
-
-    printf ("Input hex number: \n");
-    scanf ("%lx", &hexNumber);
-
-    digitBuffer = hexNumber;
-
-    /* determining the number of digits of the inputted hex number again since the function isn't designed to return
-    it. Needed here for demonstration since we need to print each bit of each hex digit which is 4 bits per digit */
-
-    while (digitBuffer) {
-        digitCount++;
-        digitBuffer >>= 4;
-    }
-
-    bitStorage = hexBin (&hexNumber);
-
-    for (int i = 0; i < (digitCount * 4); i++) {
-        printf ("%d", bitStorage[i]);
-    }
-
-    free(bitStorage);
-    return (EXIT_SUCCESS);
-}
-
-/* This function is also part of
-       _ _ _
-       | (_) |
-   __ _| |_| |__
-  / _` | | | '_ \
- | (_| | | | |_) |
-  \__, |_|_|_.__/
-   __/ |
-  |___/
-
-
-*/

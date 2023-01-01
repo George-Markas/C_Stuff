@@ -10,20 +10,22 @@ candidate #6, the second least significant bit candidate #5 etc. */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "gcsheet.h"
+#include "glib/glib.c"
+
+#define FILENAME "votes.dat"
 
 int main (void) {
 
     FILE * filePointer;
     unsigned short fileEmpty;
 
-    filePointer = fopen ("votes.dat", "r"); // Opening votes.dat file to read its contents
+    filePointer = fopen (FILENAME, "r"); // Opening votes.dat file to read its contents
 
     // Checking if votes.dat exists, exiting the programme if the file is non-existent.
 
     if (filePointer == NULL) {
         fclose (filePointer);
-        printf ("Error: votes.dat can not be read!\n");
+        printf ("Error: %s can not be read!\n", FILENAME);
         exit (EXIT_FAILURE);
     }
 
@@ -35,7 +37,7 @@ int main (void) {
 
     if (fileEmpty == 0) {
         fclose(filePointer);
-        printf("Error: votes.dat is empty, exiting programme...\n");
+        printf("Error: %s is empty, exiting programme...\n", FILENAME);
         exit(EXIT_FAILURE);
     }
 
@@ -65,7 +67,6 @@ int main (void) {
 
     free (voterData);
     return (EXIT_SUCCESS);
-
 }
 
 
