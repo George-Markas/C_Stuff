@@ -96,9 +96,10 @@ int main (void) {
     return (EXIT_SUCCESS);
 }
 
-/* This function is also part of
- *
-       _ _ _
+/*
+
+ This function is also part of
+         _ _ _
        | (_) |
    __ _| |_| |__
   / _` | | | '_ \
