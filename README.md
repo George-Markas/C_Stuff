@@ -1,11 +1,7 @@
-   _____                           _        _____   _____           _           _       
-  / ____|                         ( )      / ____| |  __ \         (_)         | |      
- | |  __  ___  ___  _ __ __ _  ___|/ ___  | |      | |__) | __ ___  _  ___  ___| |_ ___ 
- | | |_ |/ _ \/ _ \| '__/ _` |/ _ \ / __| | |      |  ___/ '__/ _ \| |/ _ \/ __| __/ __|
- | |__| |  __/ (_) | | | (_| |  __/ \__ \ | |____  | |   | | | (_) | |  __/ (__| |_\__ \
-  \_____|\___|\___/|_|  \__, |\___| |___/  \_____| |_|   |_|  \___/| |\___|\___|\__|___/
-                         __/ |                                    _/ |                  
-                        |___/                                    |__/      
+ dP""b8 888888  dP"Yb  88""Yb  dP""b8 888888  .o. .dP"Y8      dP""b8     88""Yb 88""Yb  dP"Yb   88888 888888  dP""b8 888888 .dP"Y8 
+dP   `" 88__   dP   Yb 88__dP dP   `" 88__   ,dP' `Ybo."     dP   `"     88__dP 88__dP dP   Yb     88 88__   dP   `"   88   `Ybo." 
+Yb  "88 88""   Yb   dP 88"Yb  Yb  "88 88""        o.`Y8b     Yb          88"""  88"Yb  Yb   dP o.  88 88""   Yb        88   o.`Y8b 
+ YboodP 888888  YbodP  88  Yb  YboodP 888888      8bodP'      YboodP     88     88  Yb  YbodP  "bodP' 888888  YboodP   88   8bodP' 
                         
  The purpose of this repo is to mainly store my C projects for the sake of safekeeping and
  updating between devices and therefore lacks any serious documentation but there is mostly
