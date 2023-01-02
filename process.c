@@ -1,12 +1,21 @@
-// Info stored as 16 bit unsigned short integers.
+/*
+     ___                                           ___                  _            _
+    | _ \_ _ ___  __ _ _ _ __ _ _ __  _ __  ___   / _ \__ _____ _ ___ _(_)_____ __ _(_)
+    |  _/ '_/ _ \/ _` | '_/ _` | '  \| '  \/ -_) | (_) \ V / -_) '_\ V / / -_) V  V /_
+    |_| |_| \___/\__, |_| \__,_|_|_|_|_|_|_\___|  \___/ \_/\___|_|  \_/|_\___|\_/\_/(_)
+                 |___/
 
-// The 7 most significant bits store the voter's age (possible values are 0 - 127 but only 18 through 99 are valid).
+    Info stored as 16 bit unsigned short integers.
 
-// The next 2 bits store the voter's gender with these values being possible & valid: 1 (Male), 2 (Female), 3 (N/A).
+    The 7 most significant bits store the voter's age (possible values are 0 - 127 but only 18 through 99 are valid).
 
-/* The 7 least significant bits store the vote itself, with each unique bit representing whether a candidate
-(out of the 7) has been voted for or not (with 1 and 0 values respectively). The least significant bit represents
-candidate #6, the second least significant bit candidate #5 etc. */
+    The next 2 bits store the voter's gender with these values being possible & valid: 1 (Male), 2 (Female), 3 (N/A).
+
+    The 7 least significant bits store the vote itself, with each unique bit representing whether a candidate
+    (out of the 7) has been voted for or not (with 1 and 0 values respectively). The least significant bit represents
+    candidate #6, the second least significant bit candidate #5 etc.
+
+*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -57,13 +66,9 @@ int main (void) {
 
     fclose (filePointer);
 
-    printf ("Lines counted: %d\n",lineCount); // for debug purposes, to be deleted later.
-
     // Allocating space for the array containing the voter info (number of voters * size of an unsigned short int).
 
     int* voterData = (int*) malloc(lineCount * sizeof(unsigned short));
-
-    printArray (voterData, lineCount); // for debug purposes, to be deleted later.
 
     free (voterData);
     return (EXIT_SUCCESS);
