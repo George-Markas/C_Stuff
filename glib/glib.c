@@ -25,7 +25,7 @@ memory and returns a pointer with the memory address. */
 
 // WARNING: make sure to deallocate the used memory by using free() since this function doesn't do so.
 
-int* hexBin (const unsigned long *hexInput) {
+unsigned short* hexBin (const unsigned long *hexInput) {
 
     unsigned long digitBuffer;
     unsigned long hexNumber = *hexInput;
@@ -49,7 +49,12 @@ int* hexBin (const unsigned long *hexInput) {
     }
 
     unsigned short quadOffset = 0;
-    int *bitStorage = (int*) malloc(sizeof (int) * digitCount);
+    unsigned short *bitStorage = (unsigned short*) malloc(sizeof (unsigned short) * digitCount);
+
+    if (bitStorage == NULL) {
+        printf ("Memory allocation failure, exiting... \n");
+        exit (EXIT_FAILURE);
+    }
 
     for (int i = 0; i < digitCount; i++) {
 
@@ -83,5 +88,6 @@ int* hexBin (const unsigned long *hexInput) {
     }
     return (bitStorage);
 }
+
 
 

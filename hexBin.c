@@ -33,8 +33,8 @@ unsigned short* hexBin (const unsigned long *hexInput) {
     unsigned short *bitStorage = (unsigned short*) malloc(sizeof (unsigned short) * digitCount);
 
     if (bitStorage == NULL) {
-        printf("Memory allocation failure, exiting... \n");
-        exit(EXIT_FAILURE);
+        printf ("Memory allocation failure, exiting... \n");
+        exit (EXIT_FAILURE);
     }
 
     for (int i = 0; i < digitCount; i++) {
