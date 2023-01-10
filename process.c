@@ -55,20 +55,30 @@ int main (void) {
 
     rewind (filePointer);
 
-    int lineCount = 0;
-    int charTube;
+    size_t lineCount = 0;
+    int charBuffer, hexBuffer;
+    char stringBuffer[6];
 
-    for (charTube = getc (filePointer); charTube != EOF; charTube = getc(filePointer)) {
-        if (charTube == '\n'){
+    while ((charBuffer = getc (filePointer)) != EOF) {
+        if (charBuffer == '\n') {
             lineCount++;
         }
     }
 
+    rewind(filePointer);
+
+    // Allocating space for the array containing the addresses of the bit encoded voter info.
+
+    unsigned short** voterData = NULL;
+    voterData = calloc(lineCount, sizeof(unsigned short*));
+
+    for (int i = 0; i < lineCount; i++) {
+        fgets (stringBuffer, 7, filePointer);
+        sscanf (stringBuffer,"0x%x", &hexBuffer);
+        voterData[i] = hexBin(&hexBuffer);
+    }
+
     fclose (filePointer);
-
-    // Allocating space for the array containing the voter info (number of voters * size of an unsigned short int).
-
-    int* voterData = (int*) malloc(lineCount * sizeof(unsigned short));
 
     free (voterData);
     return (EXIT_SUCCESS);
