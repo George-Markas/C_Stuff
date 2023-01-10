@@ -100,23 +100,3 @@ int main (void) {
     free(bitStorage);
     return (EXIT_SUCCESS);
 }
-
-/*
-
- This function is also part of
-
-           /$$ /$$ /$$
-          | $$|__/| $$
-  /$$$$$$ | $$ /$$| $$$$$$$
- /$$__  $$| $$| $$| $$__  $$
-| $$  \ $$| $$| $$| $$  \ $$
-| $$  | $$| $$| $$| $$  | $$
-|  $$$$$$$| $$| $$| $$$$$$$/
- \____  $$|__/|__/|_______/
- /$$  \ $$
-|  $$$$$$/
- \______/
-
-https://github.com/George-Markas/C_Stuff/tree/main/glib
-
-*/
