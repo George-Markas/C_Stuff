@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "glib/glib.c"
+#include "b447.c"
 
 #define POOL_SIZE 49
 #define LOTTO_SIZE 6
