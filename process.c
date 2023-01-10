@@ -57,7 +57,6 @@ int main (void) {
 
     size_t lineCount = 0;
     int charBuffer, hexBuffer;
-    char stringBuffer[6];
 
     while ((charBuffer = getc (filePointer)) != EOF) {
         if (charBuffer == '\n') {
@@ -66,17 +65,19 @@ int main (void) {
     }
 
     rewind(filePointer);
+    char *stringBuffer = calloc(6, sizeof(char));
 
     // Allocating space for the array containing the addresses of the bit encoded voter info.
 
-    unsigned short** voterData = NULL;
-    voterData = calloc(lineCount, sizeof(unsigned short*));
+    unsigned short** voterData = calloc(lineCount, sizeof(unsigned short*));
 
     for (int i = 0; i < lineCount; i++) {
         fgets (stringBuffer, 7, filePointer);
         sscanf (stringBuffer,"0x%x", &hexBuffer);
         voterData[i] = hexBin(&hexBuffer);
     }
+
+    free(stringBuffer);
 
     fclose (filePointer);
 
