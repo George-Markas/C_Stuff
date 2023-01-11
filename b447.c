@@ -33,6 +33,25 @@ void printArray(int* array, int arraySize) {
     printf ("\n");
 }
 
+/* Function that takes an address of continuous memory containing binary bits (1 & 0) and the number of bits to be
+processed as inputs, returning a decimal number that resulted from binary to decimal conversion of the bits given.
+The implementation of this is odd, but it is done that way to work nicely with the hexBin function found below. */
+
+int binDec (const unsigned short *bitStorage, int bitCount) {
+
+    int binExponent = 0;
+    int decOutput = 0;
+
+    for (int i = (bitCount - 1); i > -1; i--) {
+        if (bitStorage[i]) {
+            decOutput += raisePower(2, binExponent);
+        }
+        binExponent++;
+    }
+
+    return (decOutput);
+}
+
 /* Function that takes a hex number as an unsigned long input, converts it to binary bits (1 & 0), stores said bits in
 memory and returns a pointer with the memory address. */
 

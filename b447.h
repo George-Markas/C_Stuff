@@ -21,13 +21,10 @@ void xorSwap (int* a, int* b);
 
 void printArray(int* array, int arraySize);
 
+int binDec (const unsigned short *bitStorage, int bitCount);
+
 int* hexBin (const unsigned long *hexInput);
 
 int raisePower (int base, int exponent);
 
 #endif /* B447_H */
-
-
-
-
-
