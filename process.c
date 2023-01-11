@@ -90,8 +90,17 @@ int main (void) {
     unsigned int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
     unsigned short* bitStorage = NULL;
     int temp;
+    int *newlineSkip = (int*) malloc(sizeof (char));
 
     for (int i = 0; i < lineCount; i++) {
+
+        /* Using getc() to advance input stream, skipping newline characters, so they aren't picked up by fgets(). If
+        the character read by getc() isn't a newline the action is undone via ungetc(). */
+
+        if ((*newlineSkip = getc(filePointer)) != '\n') {
+            ungetc(*newlineSkip ,filePointer);
+        }
+
         fgets (stringBuffer, 7, filePointer);
         sscanf (stringBuffer,"0x%lx", &hexBuffer);
         bitStorage = hexBin(&hexBuffer);
@@ -100,37 +109,38 @@ int main (void) {
         temp = binDec (&bitStorage[0], 7);
         if (temp < 18 | temp > 99) {
             printf("Line Entry %d: Voter age out of allowed range, line will not be accounted for.\n", i + 1);
+            continue;
         }
 
         // Checking if voter gender is valid
         temp = binDec (&bitStorage[7], 2);
         if (temp < 1 | temp > 3) {
             printf("Line Entry %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
+            continue;
         }
 
         // Checking if vote is within the 1 candidate limit
         temp = 0;
-        short votedFor = -1;
+        int votedFor = -1;
         for (int j = 9; j < 16; j++) {
             if (bitStorage[j] && temp < 2) {
                 votedFor = j;
                 temp++;
             }
-            else {
+            else if (temp > 1) {
                 printf("Line Entry %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
                 votedFor = -1;
-                break;
+                continue;
             }
         }
-
-
-
-
-
-
+        //free (bitStorage);
     }
 
-    free(stringBuffer);
+    //free (newlineSkip);
+
+    //free (stringBuffer);
+
+    //free(pollData);
 
     fclose (filePointer);
 
