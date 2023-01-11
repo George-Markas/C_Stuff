@@ -48,7 +48,6 @@ int binDec (const unsigned short *bitStorage, int bitCount) {
         }
         binExponent++;
     }
-
     return (decOutput);
 }
 
