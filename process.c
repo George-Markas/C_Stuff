@@ -22,11 +22,12 @@
 #include "b447.c"
 
 #define FILENAME "votes.dat"
+#define NUM_CANDIDATES 7
 
 int main (void) {
 
     FILE * filePointer;
-    unsigned short fileEmpty;
+    long fileStatus;
 
     filePointer = fopen (FILENAME, "r"); // Opening votes.dat file to read its contents
 
@@ -42,47 +43,99 @@ int main (void) {
     If said position is 0 it naturally means the file is empty. */
 
     fseek (filePointer,0,SEEK_END);
-    fileEmpty = ftell(filePointer);
+    fileStatus = ftell(filePointer);
 
-    if (fileEmpty == 0) {
+    if (fileStatus == 0) {
         fclose(filePointer);
         printf("Error: %s is empty, exiting programme...\n", FILENAME);
         exit(EXIT_FAILURE);
     }
 
-    /* Loops till the End-of-File indicator associated with the stream is set. Checks for newlines and adds them up to
-    the voter count since each line change indicates a new info entry. */
+    /* Loops till the End-of-File indicator associated with the stream is set. Checks for newlines and adds their count
+    up to lineCount since each line change indicates a new info entry. Last line can be accompanied by a newline or left
+    as is, the count remains consistent. */
 
     rewind (filePointer);
 
     size_t lineCount = 0;
-    int charBuffer, hexBuffer;
+    int charBuffer;
 
     while ((charBuffer = getc (filePointer)) != EOF) {
         if (charBuffer == '\n') {
             lineCount++;
         }
+        else {
+            charBuffer = getc (filePointer);
+            if (charBuffer == EOF) {
+                lineCount++;
+            }
+            ungetc (charBuffer, filePointer);
+        }
     }
 
     rewind(filePointer);
+
+    unsigned long hexBuffer;
     char *stringBuffer = calloc(6, sizeof(char));
 
-    // Allocating space for the array containing the addresses of the bit encoded voter info.
+    /* Allocating space for the array containing the poll results. Data is stored in a pseudo-2D fashion and handled as
+    follows: each candidate has the votes they received categorized in each of the 3 "columns" of his respective "row",
+    with the 1st column being votes received from male voters, 2nd from female voters and 3rd from other respectively.
+    Because a one dimensional array is used, the "columns" are represented by their position relative to the candidate's
+    number.
 
-    unsigned short** voterData = calloc(lineCount, sizeof(unsigned short*));
+    e.g. the number of votes candidate #2 received from female voters are stored in the ( (candidateNumber * 3) + 1 )th
+    element of the array. */
+
+    unsigned int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
+    unsigned short* bitStorage = NULL;
+    int temp;
 
     for (int i = 0; i < lineCount; i++) {
         fgets (stringBuffer, 7, filePointer);
-        sscanf (stringBuffer,"0x%x", &hexBuffer);
-        voterData[i] = hexBin(&hexBuffer);
+        sscanf (stringBuffer,"0x%lx", &hexBuffer);
+        bitStorage = hexBin(&hexBuffer);
+
+        // Checking if voter age is within allowed range
+        temp = binDec (&bitStorage[0], 7);
+        if (temp < 18 | temp > 99) {
+            printf("Line Entry %d: Voter age out of allowed range, line will not be accounted for.\n", i + 1);
+        }
+
+        // Checking if voter gender is valid
+        temp = binDec (&bitStorage[7], 2);
+        if (temp < 1 | temp > 3) {
+            printf("Line Entry %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
+        }
+
+        // Checking if vote is within the 1 candidate limit
+        temp = 0;
+        short votedFor = -1;
+        for (int j = 9; j < 16; j++) {
+            if (bitStorage[j] && temp < 2) {
+                votedFor = j;
+                temp++;
+            }
+            else {
+                printf("Line Entry %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
+                votedFor = -1;
+                break;
+            }
+        }
+
+
+
+
+
+
     }
 
     free(stringBuffer);
 
     fclose (filePointer);
 
-    free (voterData);
     return (EXIT_SUCCESS);
 }
+
 
 

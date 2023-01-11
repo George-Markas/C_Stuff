@@ -118,8 +118,6 @@ unsigned short* hexBin (const unsigned long *hexInput) {
         quadOffset += 4;
     }
     return (bitStorage);
-
-
 }
 
 
