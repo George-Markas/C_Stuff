@@ -8,6 +8,19 @@ void xorSwap (int* a, int* b) {
     }
 }
 
+/* Simple replacement for pow() from math.h. Works with integers instead */
+
+int raisePower (int base, int exponent) {
+
+    int output = 1;
+
+    while (exponent) {
+        output *= base;
+        exponent--;
+    }
+    return output;
+}
+
 /* Simple function that prints the elements of an integer array, each seperated by vertical lines */
 
 void printArray(int* array, int arraySize) {
@@ -87,6 +100,8 @@ unsigned short* hexBin (const unsigned long *hexInput) {
         quadOffset += 4;
     }
     return (bitStorage);
+
+
 }
 
 
