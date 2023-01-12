@@ -108,14 +108,14 @@ int main (void) {
         // Checking if voter age is within allowed range
         temp = binDec (&bitStorage[0], 7);
         if (temp < 18 | temp > 99) {
-            printf("Line Entry %d: Voter age out of allowed range, line will not be accounted for.\n", i + 1);
+            printf("Line %d: Voter age out of allowed range, entry will not be accounted for.\n", i + 1);
             continue;
         }
 
         // Checking if voter gender is valid
         temp = binDec (&bitStorage[7], 2);
         if (temp < 1 | temp > 3) {
-            printf("Line Entry %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
+            printf("Line %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
             continue;
         }
 
@@ -123,17 +123,16 @@ int main (void) {
         temp = 0;
         int votedFor = -1;
         for (int j = 9; j < 16; j++) {
-            if (bitStorage[j] && temp < 2) {
+            if (bitStorage[j] && temp < 1) {
                 votedFor = j;
                 temp++;
             }
-            else if (temp > 1) {
-                printf("Line Entry %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
+            else {
+                printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
                 votedFor = -1;
-                continue;
+                break;
             }
         }
-        //free (bitStorage);
     }
 
     //free (newlineSkip);
