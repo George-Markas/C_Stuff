@@ -80,7 +80,7 @@ unsigned short* hexBin (const unsigned long *hexInput) {
     }
 
     unsigned short quadOffset = 0;
-    unsigned short *bitStorage = (unsigned short*) malloc(sizeof (unsigned short) * digitCount);
+    unsigned short *bitStorage = calloc (digitCount * 4, sizeof (unsigned short ));
 
     if (bitStorage == NULL) {
         printf ("Memory allocation failure, exiting... \n");
