@@ -123,23 +123,24 @@ int main (void) {
         temp = 0;
         int votedFor = -1;
         for (int j = 9; j < 16; j++) {
-            if (bitStorage[j] && temp < 1) {
+            if (bitStorage[j] && temp == 0) {
                 votedFor = j;
                 temp++;
             }
-            else {
+            else if (bitStorage[j]) {
                 printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
                 votedFor = -1;
                 break;
             }
         }
+        free(bitStorage);
     }
 
-    //free (newlineSkip);
+    free (newlineSkip);
 
-    //free (stringBuffer);
+    free (stringBuffer);
 
-    //free(pollData);
+    free(pollData);
 
     fclose (filePointer);
 
