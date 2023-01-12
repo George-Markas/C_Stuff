@@ -89,7 +89,7 @@ int main (void) {
 
     unsigned int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
     unsigned short* bitStorage = NULL;
-    int temp;
+    int gender, age, isValid;
     int *newlineSkip = (int*) malloc(sizeof (char));
 
     for (int i = 0; i < lineCount; i++) {
@@ -106,26 +106,26 @@ int main (void) {
         bitStorage = hexBin(&hexBuffer);
 
         // Checking if voter age is within allowed range
-        temp = binDec (&bitStorage[0], 7);
-        if (temp < 18 | temp > 99) {
-            printf("Line %d: Voter age out of allowed range, entry will not be accounted for.\n", i + 1);
+        age = binDec (&bitStorage[0], 7);
+        if (age < 18 | age > 99) {
+            printf("Line %d: Voter age outside of allowed range, entry will not be accounted for.\n", i + 1);
             continue;
         }
 
         // Checking if voter gender is valid
-        temp = binDec (&bitStorage[7], 2);
-        if (temp < 1 | temp > 3) {
+        gender = binDec (&bitStorage[7], 2);
+        if (gender < 1 | gender > 3) {
             printf("Line %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
             continue;
         }
 
         // Checking if vote is within the 1 candidate limit
-        temp = 0;
+        isValid = 0;
         int votedFor = -1;
         for (int j = 9; j < 16; j++) {
-            if (bitStorage[j] && temp == 0) {
+            if (bitStorage[j] && isValid == 0) {
                 votedFor = j;
-                temp++;
+                isValid++;
             }
             else if (bitStorage[j]) {
                 printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
@@ -133,7 +133,21 @@ int main (void) {
                 break;
             }
         }
-        free(bitStorage);
+        if (votedFor != -1) {
+            int offset = 0;
+            switch (gender) {
+
+                default: break;
+
+                case 2: offset = 1;
+                break;
+
+                case 3: offset = 2;
+                break;
+            }
+            pollData[votedFor + offset] += 1;
+        }
+        free (bitStorage);
     }
 
     free (newlineSkip);
