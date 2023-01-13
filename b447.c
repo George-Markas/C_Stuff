@@ -21,7 +21,7 @@ int raisePower (int base, int exponent) {
     return output;
 }
 
-/* Simple function that prints the elements of an integer array, each seperated by vertical lines */
+/* Simple function that prints the elements of an integer array, each seperated by a vertical line */
 
 void printArray(int* array, int arraySize) {
     for (int i = 0; i < arraySize; i++) {

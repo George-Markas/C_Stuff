@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "b447.c"
 
 #define FILENAME "votes.dat"
@@ -52,8 +53,8 @@ int main (void) {
     }
 
     /* Loops till the End-of-File indicator associated with the stream is set. Checks for newlines and adds their count
-    up to lineCount since each line change indicates a new info entry. Last line can be accompanied by a newline or left
-    as is, the count remains consistent. */
+    up to lineCount since each line change indicates a new data entry. The last line can be accompanied by a newline or
+    left as is, the count remains consistent. */
 
     rewind (filePointer);
 
@@ -73,11 +74,6 @@ int main (void) {
         }
     }
 
-    rewind(filePointer);
-
-    unsigned long hexBuffer;
-    char *stringBuffer = calloc(6, sizeof(char));
-
     /* Allocating space for the array containing the poll results. Data is stored in a pseudo-2D fashion and handled as
     follows: each candidate has the votes they received categorized in each of the 3 "columns" of his respective "row",
     with the 1st column being votes received from male voters, 2nd from female voters and 3rd from other respectively.
@@ -87,21 +83,34 @@ int main (void) {
     e.g. the number of votes candidate #2 received from female voters are stored in the ( (candidateNumber * 3) + 1 )th
     element of the array. */
 
-    unsigned int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
+    unsigned long hexBuffer;
+    int gender, age, temp;
+    size_t lengthCheck;
     unsigned short* bitStorage = NULL;
-    int gender, age, isValid;
+
+    char *stringBuffer = calloc(6, sizeof(char));
     int *newlineSkip = (int*) malloc(sizeof (char));
+    int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
+
+    rewind(filePointer);
 
     for (int i = 0; i < lineCount; i++) {
 
-        /* Using getc() to advance input stream, skipping newline characters, so they aren't picked up by fgets(). If
-        the character read by getc() isn't a newline the action is undone via ungetc(). */
+        /* Using getc() to advance the input stream, skipping newline characters, so they aren't picked up by fgets().
+        If the character read by getc() isn't a newline the action is undone via ungetc(). */
 
         if ((*newlineSkip = getc(filePointer)) != '\n') {
             ungetc(*newlineSkip ,filePointer);
         }
 
         fgets (stringBuffer, 7, filePointer);
+
+        lengthCheck = strlen(stringBuffer);
+        if (lengthCheck != 6) {
+            printf("Line %d: The entry's length is invalid, skipping it...\n", i + 1);
+            continue;
+        }
+
         sscanf (stringBuffer,"0x%lx", &hexBuffer);
         bitStorage = hexBin(&hexBuffer);
 
@@ -120,12 +129,12 @@ int main (void) {
         }
 
         // Checking if vote is within the 1 candidate limit
-        isValid = 0;
+        temp = 0;
         int votedFor = -1;
         for (int j = 9; j < 16; j++) {
-            if (bitStorage[j] && isValid == 0) {
-                votedFor = j;
-                isValid++;
+            if (bitStorage[j] && temp == 0) {
+                votedFor = (j - 9);
+                temp++;
             }
             else if (bitStorage[j]) {
                 printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
@@ -145,9 +154,18 @@ int main (void) {
                 case 3: offset = 2;
                 break;
             }
-            pollData[votedFor + offset] += 1;
+            pollData[(votedFor * 3) + offset] += 1;
         }
         free (bitStorage);
+    }
+
+    int max = (pollData[0] + pollData[1] + pollData[2]);
+
+    for (int i = 3; i < 21; i = i + 3) {
+        temp = pollData[i] + pollData[i+1] + pollData[i+2];
+        if (temp > max) {
+            max = temp;
+        }
     }
 
     free (newlineSkip);
