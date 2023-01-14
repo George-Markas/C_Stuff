@@ -91,7 +91,7 @@ int main (void) {
     size_t lengthCheck;
     unsigned short* bitStorage = NULL;
 
-    char *stringBuffer = calloc (6, sizeof (char));
+    char *stringBuffer = calloc (7, sizeof (char));
     int *newlineSkip = (int*) malloc (sizeof (char));
     int *pollData = calloc (NUM_CANDIDATES * 3, sizeof (unsigned int));
     int *ageData = calloc (NUM_CANDIDATES * 4, sizeof (int));
@@ -100,6 +100,8 @@ int main (void) {
 
     for (int i = 0; i < lineCount; i++) {
 
+        /* Resetting the error flag triggered by an invalid entry, meaning there's an entry following the invalid one,
+        indicated by the fact the programme re-entered the for loop. */
         fatalError = 0;
 
         /* Using getc() to advance the input stream, skipping newline characters, so they aren't picked up by fgets().
