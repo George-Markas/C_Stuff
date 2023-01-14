@@ -382,7 +382,7 @@ int main (void) {
 
     fclose (filePointer);
 
-    printf("Execution finished, press any key to exit...\n");
+    printf("Execution finished, press ENTER to exit...\n");
     getchar();
 
     return (EXIT_SUCCESS);
