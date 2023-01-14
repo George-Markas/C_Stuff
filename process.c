@@ -118,6 +118,7 @@ int main (void) {
         if (lengthCheck != 6) {
             printf("Line %d: The entry's length is invalid, skipping it...\n", i + 1);
             putchar('\n');
+            fatalError = 1;
             continue;
         }
 
@@ -129,6 +130,7 @@ int main (void) {
         if (age < 18 | age > 99) {
             printf("Line %d: Voter age outside of allowed range, entry will not be accounted for.\n", i + 1);
             putchar('\n');
+            fatalError = 1;
             continue;
         }
 
@@ -153,6 +155,7 @@ int main (void) {
             else if (bitStorage[j]) {
                 printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
                 putchar('\n');
+                fatalError = 1;
                 votedFor = -1;
                 break;
             }
