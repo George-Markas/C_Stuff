@@ -87,7 +87,7 @@ int main (void) {
     ranges. */
 
     unsigned long hexBuffer;
-    int gender, age, temp, offset;
+    int gender, age, temp, offset, fatalError = 1;
     size_t lengthCheck;
     unsigned short* bitStorage = NULL;
 
@@ -99,6 +99,8 @@ int main (void) {
     rewind(filePointer);
 
     for (int i = 0; i < lineCount; i++) {
+
+        fatalError = 0;
 
         /* Using getc() to advance the input stream, skipping newline characters, so they aren't picked up by fgets().
         If the character read by getc() isn't a newline the action is undone via ungetc(). */
@@ -133,6 +135,7 @@ int main (void) {
         if (gender < 1 | gender > 3) {
             printf("Line %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
             putchar('\n');
+            fatalError = 1;
             continue;
         }
 
@@ -186,9 +189,15 @@ int main (void) {
         free (bitStorage);
     }
 
-    //free (stringBuffer);
+    free (stringBuffer);
 
-    //free (newlineSkip);
+    free (newlineSkip);
+
+    /* If there are no more entries after an invalid one, the programme exits so the rest of the code isn't ran with
+    non-existent "proper values" */
+    if (fatalError == 1) {
+        exit(EXIT_FAILURE);
+    }
 
     // Determining which candidate got the most total votes
     int max = (pollData[0] + pollData[1] + pollData[2]);
