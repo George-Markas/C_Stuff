@@ -341,7 +341,7 @@ int main (void) {
 
                     if (k == 0) {
                         putchar('\n');
-                        printf("Men:   ");
+                        printf("    Men:   ");
                     }
                     printf("*");
                 }
@@ -351,7 +351,7 @@ int main (void) {
 
                     if (k == 0) {
                         putchar('\n');
-                        printf("Women: ");
+                        printf("    Women: ");
                     }
                     printf("*");
                 }
@@ -361,7 +361,7 @@ int main (void) {
 
                     if (k == 0) {
                         putchar('\n');
-                        printf("Other: ");
+                        printf("    Other: ");
                     }
                     printf("*");
                 }
