@@ -186,9 +186,9 @@ int main (void) {
         free (bitStorage);
     }
 
-    free (stringBuffer);
+    //free (stringBuffer);
 
-    free (newlineSkip);
+    //free (newlineSkip);
 
     // Determining which candidate got the most total votes
     int max = (pollData[0] + pollData[1] + pollData[2]);
@@ -286,13 +286,13 @@ int main (void) {
             max = ageData[1] + ageData[2] + ageData[3];
         }
 
-        for(int i = (4 + offset); i < (28 - offset); i += 3) {
+        for (int i = (4 + offset); i < (28 - offset); i += 4) {
 
             if (offset == 0) {
                 temp = ageData[i];
             }
             else {
-                temp = ageData[i] + ageData[i+1] + ageData[i+2];
+                temp = ageData[i] + ageData[i + 1] + ageData[i + 2];
             }
 
             if (temp > max) {
