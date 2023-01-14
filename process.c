@@ -81,16 +81,20 @@ int main (void) {
     number.
 
     e.g. the number of votes candidate #2 received from female voters are stored in the ( (candidateNumber * 3) + 1 )th
-    element of the array. */
+    element of the array.
+
+    The same method is used for the array containing the age data, although there are 4 "columns" for the respective age
+    ranges. */
 
     unsigned long hexBuffer;
-    int gender, age, temp;
+    int gender, age, temp, offset;
     size_t lengthCheck;
     unsigned short* bitStorage = NULL;
 
-    char *stringBuffer = calloc(6, sizeof(char));
-    int *newlineSkip = (int*) malloc(sizeof (char));
-    int *pollData = calloc(NUM_CANDIDATES * 3, sizeof(unsigned int));
+    char *stringBuffer = calloc (6, sizeof (char));
+    int *newlineSkip = (int*) malloc (sizeof (char));
+    int *pollData = calloc (NUM_CANDIDATES * 3, sizeof (unsigned int));
+    int *ageData = calloc (NUM_CANDIDATES * 4, sizeof (int));
 
     rewind(filePointer);
 
@@ -105,9 +109,11 @@ int main (void) {
 
         fgets (stringBuffer, 7, filePointer);
 
+        // Checking if the entry is 6 characters long (the 16-bit hex number + the "0x" prefix, quotes not included).
         lengthCheck = strlen(stringBuffer);
         if (lengthCheck != 6) {
             printf("Line %d: The entry's length is invalid, skipping it...\n", i + 1);
+            putchar('\n');
             continue;
         }
 
@@ -118,6 +124,7 @@ int main (void) {
         age = binDec (&bitStorage[0], 7);
         if (age < 18 | age > 99) {
             printf("Line %d: Voter age outside of allowed range, entry will not be accounted for.\n", i + 1);
+            putchar('\n');
             continue;
         }
 
@@ -125,12 +132,14 @@ int main (void) {
         gender = binDec (&bitStorage[7], 2);
         if (gender < 1 | gender > 3) {
             printf("Line %d: Invalid value for voter gender, entry will not be accounted for.\n", i + 1);
+            putchar('\n');
             continue;
         }
 
         // Checking if vote is within the 1 candidate limit
         temp = 0;
         int votedFor = -1;
+
         for (int j = 9; j < 16; j++) {
             if (bitStorage[j] && temp == 0) {
                 votedFor = (j - 9);
@@ -138,41 +147,223 @@ int main (void) {
             }
             else if (bitStorage[j]) {
                 printf("Line %d: Candidate limit violated, entry will not be accounted for.\n", i + 1);
+                putchar('\n');
                 votedFor = -1;
                 break;
             }
         }
-        if (votedFor != -1) {
-            int offset = 0;
-            switch (gender) {
 
-                default: break;
+        // Initializing the array position offset to properly store the vote based on the voter's gender
+        if (votedFor != -1) {
+            offset = 0;
+            switch (gender) {
 
                 case 2: offset = 1;
                 break;
 
                 case 3: offset = 2;
                 break;
+
+                default: break;
             }
             pollData[(votedFor * 3) + offset] += 1;
+
+            switch (age) {
+
+                case 18 ... 29: ageData[(votedFor * 4)]++;
+                break;
+
+                case 30 ... 44: ageData[(votedFor * 3) + 1]++;
+                break;
+
+                case 45 ... 59: ageData[(votedFor * 3) + 2]++;
+                break;
+
+                default: ageData[(votedFor * 3) + 3]++;
+                break;
+            }
         }
         free (bitStorage);
     }
 
-    int max = (pollData[0] + pollData[1] + pollData[2]);
-
-    for (int i = 3; i < 21; i = i + 3) {
-        temp = pollData[i] + pollData[i+1] + pollData[i+2];
-        if (temp > max) {
-            max = temp;
-        }
-    }
+    free (stringBuffer);
 
     free (newlineSkip);
 
-    free (stringBuffer);
+    // Determining which candidate got the most total votes
+    int max = (pollData[0] + pollData[1] + pollData[2]);
+    int maxPos = 0;
+
+    for (int i = 3; i < 21; i += 3) {
+        temp = pollData[i] + pollData[i+1] + pollData[i+2];
+        if (temp > max) {
+            max = temp;
+            maxPos = i;
+        }
+    }
+
+    puts("===========================| Poll Winner |===========================");
+    putchar('\n');
+
+    printf("Candidate #%d was voted for the most with %d vote(s) tallied up in their ballot.\n", 6 - ((maxPos - offset) / 3), max);
+    putchar('\n');
+
+    puts("========================| Gender Statistics |========================");
+    putchar('\n');
+
+    // Determining which candidate got voted for the most by each gender;
+    for (offset = 0; offset < 3; offset++) {
+
+        maxPos = 0;
+        max = pollData[offset];
+
+        for (int i = (3 + offset); i < (21 - offset); i += 3) {
+            temp = pollData[i];
+            if (temp > max) {
+                max = temp;
+                maxPos = i;
+            }
+        }
+
+        if (offset == 0) {
+            printf("Candidate #%d was voted for the most by men, with %d vote(s).\n", 6 - ((maxPos - offset) / 3), max);
+            putchar('\n');
+        }
+        else if (offset == 1) {
+            printf("Candidate #%d was voted for the most by women, with %d vote(s).\n", 6 - ((maxPos - offset) / 3), max);
+            putchar('\n');
+        }
+        else {
+            printf("Candidate #%d was voted for the most by other genders, with %d vote(s).\n", 6 - ((maxPos - offset) / 3), max);
+            putchar('\n');
+        }
+    }
+
+    puts("=========================| Age Information |=========================");
+    putchar('\n');
+
+    // Determining the number of voters in each age group;
+    for (offset = 0; offset < 4; offset++) {
+
+        temp = 0;
+
+        for (int i = offset; i < (28 - offset); i+= 4){
+            temp += ageData[i];
+        }
+
+        if (offset == 0) {
+            printf("%d voter(s) were between the ages of 18 and 29.\n", temp);
+            putchar('\n');
+        }
+        else if (offset == 1) {
+            printf("%d voter(s) were between the ages of 30 and 44.\n", temp);
+            putchar('\n');
+        }
+        else if (offset == 2) {
+            printf("%d voter(s) were between the ages of 45 and 59.\n", temp);
+            putchar('\n');
+        }
+        else {
+            printf("%d voter(s) were over the age of 60.\n", temp);
+            putchar('\n');
+        }
+    }
+
+    puts("==========================| Miscellaneous |==========================");
+    putchar('\n');
+
+    /* Determining which candidate got voted for the most by "the youth" and which by the "elderly" (definition of youth
+    for our case is     */
+    for (offset = 0; offset < 2; offset++) {
+
+        temp = 0;
+        maxPos = 0;
+
+        if (offset == 0) {
+            max = ageData[0];
+        }
+        else {
+            max = ageData[1] + ageData[2] + ageData[3];
+        }
+
+        for(int i = (4 + offset); i < (28 - offset); i += 3) {
+
+            if (offset == 0) {
+                temp = ageData[i];
+            }
+            else {
+                temp = ageData[i] + ageData[i+1] + ageData[i+2];
+            }
+
+            if (temp > max) {
+                max = temp;
+                maxPos = i;
+            }
+        }
+
+        if (offset == 0) {
+            printf("#%d Candidate was voted for the most by the \"youth\", with %d votes.\n", 6 - ((maxPos - offset) / 4), max);
+            putchar('\n');
+        }
+        else {
+            printf("#%d Candidate was voted for the most by the \"elderly\", with %d votes.\n", 6 - ((maxPos - offset) / 4), max);
+            putchar('\n');
+        }
+    }
+
+    puts("====================| Candidate Vote Histograms |====================");
+
+    /* Creating histograms for the votes received on a per-candidate basis, both total and per gender. If a candidate
+    has received no votes from a gender, a histogram won't appear for said gender. */
+
+    for (int i = 0; i < 21; i += 3) {
+
+        putchar('\n');
+        printf("Candidate #%d:\n", 6 - (i / 3));
+
+        for (int j = i; j < (i + 3); j++) {
+
+            if ((j - i) == 0) {
+                for (int k = 0; k < pollData[j]; k++) {
+
+                    if (k == 0) {
+                        putchar('\n');
+                        printf("Men:   ");
+                    }
+                    printf("*");
+                }
+            }
+            else if((j - i) == 1) {
+                for (int k = 0; k < pollData[j]; k++) {
+
+                    if (k == 0) {
+                        putchar('\n');
+                        printf("Women: ");
+                    }
+                    printf("*");
+                }
+            }
+            else {
+                for (int k = 0; k < pollData[j]; k++) {
+
+                    if (k == 0) {
+                        putchar('\n');
+                        printf("Other: ");
+                    }
+                    printf("*");
+                }
+            }
+
+        }
+        putchar('\n');
+    }
+
+    puts("=====================================================================");
+    putchar('\n');
 
     free(pollData);
+
+    free (ageData);
 
     fclose (filePointer);
 
