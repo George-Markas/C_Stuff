@@ -382,11 +382,8 @@ int main (void) {
 
     fclose (filePointer);
 
-    printf("Execution finished, press ENTER to exit...\n");
-    getchar();
+    printf("Execution finished, press ENTER to exit...");
+    getc(stdin);
 
     return (EXIT_SUCCESS);
 }
-
-
-
