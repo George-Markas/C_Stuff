@@ -273,7 +273,7 @@ int main (void) {
     putchar('\n');
 
     /* Determining which candidate got voted for the most by "the youth" and which by the "elderly" (definition of youth
-    for our case is     */
+    for our case is anyone within the age range of 18 - 29. the rest are considered "elderly"). */
     for (offset = 0; offset < 2; offset++) {
 
         temp = 0;
@@ -320,6 +320,10 @@ int main (void) {
 
         putchar('\n');
         printf("Candidate #%d:\n", 6 - (i / 3));
+
+        /* Traversing through each candidate's "column" in pollData and printing an "*" for each vote received. This
+        process is repeated 3 times for each candidate since there are 3 gender values to tally up votes from, each with
+        their respective column. */
 
         for (int j = i; j < (i + 3); j++) {
 
