@@ -38,13 +38,13 @@ void printArray(int* array, int arraySize) {
 void asciiArt (const char* fileName) {
 
     int charBuffer;
-    FILE * filePointer = fopen(fileName, "r");
+    FILE * filePointer = fopen (fileName, "r");
 
     while ((charBuffer = getc(filePointer)) !=  EOF) {
-        putc(charBuffer, stdout);
+        putc (charBuffer, stdout);
     }
 
-    fclose(filePointer);
+    fclose (filePointer);
 }
 
 /* Function that takes an address of continuous memory containing binary bits (1 & 0) and the number of bits to be

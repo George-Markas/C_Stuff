@@ -19,7 +19,7 @@
 
 void xorSwap (int* a, int* b);
 
-void printArray(int* array, int arraySize);
+void printArray (int* array, int arraySize);
 
 void asciiArt (const char* fileName);
 
