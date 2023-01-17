@@ -21,6 +21,8 @@ void xorSwap (int* a, int* b);
 
 void printArray(int* array, int arraySize);
 
+void asciiArt (const char* fileName);
+
 int binDec (const unsigned short *bitStorage, int bitCount);
 
 int* hexBin (const unsigned long *hexInput);

@@ -33,6 +33,20 @@ void printArray(int* array, int arraySize) {
     printf ("\n");
 }
 
+/* Simple function for printing ascii art from a text file. Takes the source file's name as input. */
+
+void asciiArt (const char* fileName) {
+
+    int charBuffer;
+    FILE * filePointer = fopen(fileName, "r");
+
+    while ((charBuffer = getc(filePointer)) !=  EOF) {
+        putc(charBuffer, stdout);
+    }
+
+    fclose(filePointer);
+}
+
 /* Function that takes an address of continuous memory containing binary bits (1 & 0) and the number of bits to be
 processed as inputs, returning a decimal number that resulted from binary to decimal conversion of the bits given.
 The implementation of this is odd, but it is done that way to work nicely with the hexBin function found below. */
