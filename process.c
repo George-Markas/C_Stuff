@@ -27,6 +27,8 @@
 
 int main (void) {
 
+    putchar('\n');
+
     FILE * filePointer;
     long fileStatus;
 
